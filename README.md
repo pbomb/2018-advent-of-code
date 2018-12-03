@@ -1,2 +1,16 @@
-# 2018-advent-of-code
-2018 [Advent of Code](https://adventofcode.com) exercises
+
+
+# Build
+```
+npm run build
+```
+
+# Watch
+
+```
+npm run watch
+```
+
+
+# Editor
+If you use `vscode`, Press `Windows + Shift + B` it will build automatically
