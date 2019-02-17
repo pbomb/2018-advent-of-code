@@ -51,4 +51,8 @@
  */
 
 let frequency =
-  MapFreqencies.mapFrequencies()->Belt.List.reduce(0.0, (+.))->Js.log;
+  "day1.txt"
+  ->Util.readLinesOfFile
+  ->Belt.Array.map(Js.Float.fromString)
+  ->Belt.Array.reduce(0.0, (+.))
+  ->Js.log;

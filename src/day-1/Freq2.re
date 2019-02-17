@@ -39,7 +39,11 @@ module FloatCmp =
     let cmp = Pervasives.compare;
   });
 
-let deltas = MapFreqencies.mapFrequencies();
+let deltas =
+  "day1.txt"
+  ->Util.readLinesOfFile
+  ->Belt.List.fromArray
+  ->Belt.List.map(Js.Float.fromString);
 
 let rec processDeltas = (remaining, currFreq, seenFreqs) => {
   seenFreqs->Belt.Set.has(currFreq) ?
