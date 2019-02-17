@@ -50,17 +50,5 @@
  all of the changes in frequency have been applied?
  */
 
-let foo =
-  Js.String.split("\n", Node.Fs.readFileAsUtf8Sync("input.txt"))
-  -> Belt.Array.map(line => {
-       let operator = Js.String.substring(~from=0, ~to_=1, line);
-       let intValue =
-         String.length(line) > 1 ?
-           int_of_string(Js.String.substringToEnd(~from=1, line)) : 0;
-       switch (operator) {
-       | "-" => intValue * (-1)
-       | _ => intValue
-       };
-     })
-  -> Belt.Array.reduce(0, (freq, value) => value + freq)
-  -> Js.log;
+let frequency =
+  MapFreqencies.mapFrequencies()->Belt.List.reduce(0.0, (+.))->Js.log;
