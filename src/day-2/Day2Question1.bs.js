@@ -33,7 +33,7 @@ function calculateGroups(_boxIDs, _groups) {
       var nextGroup = Belt_HashMapString.reduce(instancesOfChar, /* record */[
             /* twos */0,
             /* threes */0
-          ], (function (groups, key, value) {
+          ], (function (groups, _key, value) {
               if (value !== 2) {
                 if (value !== 3) {
                   return groups;

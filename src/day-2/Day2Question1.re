@@ -70,7 +70,7 @@ let rec calculateGroups = (boxIDs, groups) => {
     calculateInstancesOfChar(boxID, instancesOfChar);
     let nextGroup =
       Belt.HashMap.String.reduce(
-        instancesOfChar, {twos: 0, threes: 0}, (groups, key, value) =>
+        instancesOfChar, {twos: 0, threes: 0}, (groups, _key, value) =>
         switch (value) {
         | 2 => {twos: groups.twos + 1, threes: groups.threes}
         | 3 => {twos: groups.twos, threes: groups.threes + 1}
