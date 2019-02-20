@@ -52,12 +52,7 @@
  If the Elves all proceed with their own plans, none of them will have enough fabric.
  How many square inches of fabric are within two or more claims?
  */
-
-type claim = {
-  id: int,
-  fromEdges: (int, int),
-  dimensions: (int, int),
-};
+open Day3Util;
 
 module SquareHitCmp =
   Belt.Id.MakeComparable({
@@ -70,25 +65,9 @@ module SquareHitCmp =
     };
   });
 
-let parseClaim = claimLine => {
-  let claimParts = claimLine |> Js.String.split(" ");
-  let edgeParts =
-    (
-      claimParts[2]->Js.String.slice(~from=0, ~to_=-1) |> Js.String.split(",")
-    )
-    ->Belt.Array.map(int_of_string);
-  let dimensionParts =
-    (claimParts[3] |> Js.String.split("x"))->Belt.Array.map(int_of_string);
-  {
-    id: claimParts[0]->Js.String.substringToEnd(~from=1)->int_of_string,
-    fromEdges: (edgeParts[0], edgeParts[1]),
-    dimensions: (dimensionParts[0], dimensionParts[1]),
-  };
-};
-
-let addSquaresFromClaim = (aClaim, claimMap) => {
-  let (edgeX, edgeY) = aClaim.fromEdges;
-  let (xSize, ySize) = aClaim.dimensions;
+let addSquaresFromClaim = ({fromEdges, dimensions}: claim, claimMap) => {
+  let (edgeX, edgeY) = fromEdges;
+  let (xSize, ySize) = dimensions;
   for (x in edgeX to edgeX + xSize - 1) {
     for (y in edgeY to edgeY + ySize - 1) {
       let existingCountForSquare = claimMap->Belt.MutableMap.get((x, y));
@@ -109,16 +88,10 @@ let calculateClaimsPerLocation = claims => {
   claimMap;
 };
 
-let squaresWithOverlap = overlaps => {
+let locationsWithOverlap = overlaps => {
   overlaps->Belt.MutableMap.reduce(0, (total, _key, value) =>
     value > 1 ? total + 1 : total
   );
 };
 
-"day3.txt"
-->Util.readLinesOfFile
-->Belt.List.fromArray
-->Belt.List.map(parseClaim)
-->calculateClaimsPerLocation
-->squaresWithOverlap
-->Js.log;
+readClaims()->calculateClaimsPerLocation->locationsWithOverlap->Js.log;
